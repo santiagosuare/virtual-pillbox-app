@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import NavBar from "./components/NavBar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import User from "./components/User";
+import Medicine from "./components/Medicine";
+import Calendar from "./components/Calendar";
+import Export from "./components/Export";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/Export" caseSensitive={false} element={<Export />} />
+        <Route
+          path="/Calendario"
+          caseSensitive={false}
+          element={<Calendar />}
+        />
+        <Route path="/Medicina" caseSensitive={false} element={<Medicine />} />
+        <Route path="/User" caseSensitive={false} element={<User />} />
+        <Route path="/" caseSensitive={false} element={<Home />} />
+      </Routes>
+      <NavBar />
+    </Router>
   );
 }
 
