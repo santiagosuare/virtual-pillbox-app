@@ -3,7 +3,7 @@ import Alert from "react-bootstrap/Alert";
 import ListGroupMedicament from "./ListGroupMedicament";
 
 const Home = () => {
-  let time = new Date();
+  const time = new Date();
   let hours = time.getHours();
   let minutes = time.getMinutes();
   let seconds = time.getSeconds();
