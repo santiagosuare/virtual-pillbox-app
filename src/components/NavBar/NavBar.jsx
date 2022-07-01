@@ -21,25 +21,25 @@ const NavBar = () => {
               </Col>
 
               <Col>
-                <Nav.Link href="/User">
+                <Nav.Link href="/usario">
                   <FaUser size={33} />
                 </Nav.Link>
               </Col>
 
               <Col>
-                <Nav.Link href="/Medicina">
+                <Nav.Link href="/medicina">
                   <CgPill size={33} />
                 </Nav.Link>
               </Col>
 
               <Col>
-                <Nav.Link href="/Calendario">
+                <Nav.Link href="/calendario">
                   <FaCalendarAlt size={33} />
                 </Nav.Link>
               </Col>
 
               <Col>
-                <Nav.Link href="/Export">
+                <Nav.Link href="/export">
                   <FaFileExport size={33} />
                 </Nav.Link>
               </Col>

@@ -1,6 +1,6 @@
 import React from "react";
 import Alert from "react-bootstrap/Alert";
-import ListGroupMedicament from "./ListGroupMedicament";
+import ListGroupMedicine from "../Medicine/ListGroupMedicine";
 
 const Home = () => {
   const time = new Date();
@@ -63,7 +63,7 @@ const Home = () => {
         </center>
       </Alert>
 
-      <ListGroupMedicament />
+      <ListGroupMedicine />
     </div>
   );
 };
