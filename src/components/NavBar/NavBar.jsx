@@ -15,7 +15,7 @@ const NavBar = () => {
           <Container>
             <Row md={5}>
               <Col>
-                <Nav.Link href="/">
+                <Nav.Link href="/home">
                   <BsFillHouseDoorFill size={33} />
                 </Nav.Link>
               </Col>
