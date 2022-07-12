@@ -1,8 +1,8 @@
 import React from "react";
 import { ListGroup, Image, Container, Row, Col } from "react-bootstrap";
-import MOCK from "../mocks/MOCK_DATA.json";
+import MOCK from "../../mocks/MOCK_DATA.json";
 
-const ListGroupMedicament = () => {
+const ListGroupMedicine = () => {
   console.log(MOCK[0]);
 
   return (
@@ -54,4 +54,4 @@ const ListGroupMedicament = () => {
   );
 };
 
-export default ListGroupMedicament;
+export default ListGroupMedicine;
