@@ -33,3 +33,28 @@ export function RequireAuth({ children }) {
     }
     return children;
 }
+
+export function RequireNotAuth({ children }) {
+    const auth = useAuth();
+    const location = useLocation();
+    if (auth.user) {
+        return <Navigate to="/home" state={{ from: location }} replace />;
+    }
+    return children;
+}
+
+export function HideIfLoggedIn({ children }) {
+    const auth = useAuth();
+    if (auth.user) {
+        return null;
+    }
+    return children;
+}
+
+export function HideIfLoggedOut({ children }) {
+    const auth = useAuth();
+    if (!auth.user) {
+        return null;
+    }
+    return children;
+}

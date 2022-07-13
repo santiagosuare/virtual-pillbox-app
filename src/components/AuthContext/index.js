@@ -1,1 +1,1 @@
-export { AuthProvider, RequireAuth, useAuth } from "./AuthContext";
+export { AuthProvider, RequireAuth, useAuth, RequireNotAuth, HideIfLoggedIn, HideIfLoggedOut} from "./AuthContext";

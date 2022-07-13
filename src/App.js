@@ -1,6 +1,6 @@
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
-import { BrowserRouter as Router, Route, Routes, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import User from "./components/User";
 import Medicine from "./components/Medicine";
@@ -8,7 +8,7 @@ import Calendar from "./components/Calendar";
 import Export from "./components/Export";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { AuthProvider, RequireAuth } from "./components/AuthContext";
+import { AuthProvider, HideIfLoggedOut, RequireAuth, RequireNotAuth } from "./components/AuthContext";
 
 function App() {
   return (
@@ -20,10 +20,10 @@ function App() {
             <Route path="/medicina" element={<RequireAuth><Medicine /></RequireAuth>} />
             <Route path="/usario" element={<RequireAuth><User /></RequireAuth>} />
             <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
-            <Route path="/login" exact element={<Login />} />
-            <Route path="/register" exact element={<Register />} />
+            <Route path="/login" element={<RequireNotAuth><Login /></RequireNotAuth>} />
+            <Route path="/register" element={<RequireNotAuth><Register /></RequireNotAuth>} />
           </Routes>
-          <NavBar />
+          <HideIfLoggedOut><NavBar /></HideIfLoggedOut>
         </Router>
       </AuthProvider>
   );

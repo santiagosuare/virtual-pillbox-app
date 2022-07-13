@@ -17,8 +17,6 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import JwtDecode from 'jwt-decode';
-import Login from '.';
 
 const theme = createTheme();
 
@@ -109,13 +107,8 @@ export default function SignIn() {
                             }
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Olvidé mi contraseña
-                                </Link>
-                            </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link onClick={() => navigate('/register')} variant="body2">
                                     No tengo cuenta
                                 </Link>
                             </Grid>
