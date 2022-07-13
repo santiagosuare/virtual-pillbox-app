@@ -18,13 +18,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import JwtDecode from 'jwt-decode';
+import Login from '.';
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const { setUser } = useAuth();
+    const { user, login } = useAuth();
     const [ isLoading, setIsLoading ] = React.useState(false);
+
+    if(user) {
+        setTimeout( () => navigate('/home'), 0);
+        return null;
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -40,7 +46,7 @@ export default function SignIn() {
             setIsLoading(false);
             const result = await response.json();
             const { token } = result;
-            setUser( JwtDecode(token) );
+            login(token);
             navigate('/home');
         } catch (error) {
             console.log(error.message, 'error');

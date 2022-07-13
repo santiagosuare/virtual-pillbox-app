@@ -5,13 +5,19 @@ import JwtDecode from "jwt-decode";
 export const AuthContext = React.createContext(null);
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = React.useState(null);
+    const token = localStorage.getItem("token");
+    const defaultState = token ? JwtDecode(token) : null;
+    const [user, setUser] = React.useState(defaultState);
 
-    const token = localStorage.getItem('token');
-
-    const value = token ? { user: JwtDecode(token)  } : {};
-
-    return <AuthContext.Provider value={{user, setUser}}>{children}</AuthContext.Provider>;
+    const login = (token) => {
+        localStorage.setItem("token", token);
+        setUser(JwtDecode(token));
+    }
+    const logout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
+    }
+    return <AuthContext.Provider value={{user, login, logout}}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
@@ -21,7 +27,7 @@ export function useAuth() {
 export function RequireAuth({ children }) {
     const auth = useAuth();
     const location = useLocation();
-
+    console.log( auth );
     if (!auth.user) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }

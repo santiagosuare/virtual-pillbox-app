@@ -1,8 +1,10 @@
 import React from "react";
 import Alert from "react-bootstrap/Alert";
 import ListGroupMedicine from "../Medicine/ListGroupMedicine";
+import { useAuth } from "../AuthContext";
 
 const Home = () => {
+  const { logout } = useAuth();
   const time = new Date();
   let hours = time.getHours();
   let minutes = time.getMinutes();
@@ -61,8 +63,8 @@ const Home = () => {
             {dayName}, {date} de {monthName} de {year}
           </p>
         </center>
+        <div onClick={()=> logout()}>Salir</div>
       </Alert>
-
       <ListGroupMedicine />
     </div>
   );
