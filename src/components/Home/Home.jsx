@@ -1,72 +1,47 @@
 import React from "react";
-import Alert from "react-bootstrap/Alert";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ListGroupMedicine from "../Medicine/ListGroupMedicine";
 import { useAuth } from "../AuthContext";
+import {
+  Typography,
+  Container,
+  Button,
+  Box,
+  AppBar,
+  Toolbar,
+  IconButton,
+} from '@mui/material';
+import House from '@mui/icons-material/House';
+
+const theme = createTheme();
 
 const Home = () => {
   const { logout } = useAuth();
-  const time = new Date();
-  let hours = time.getHours();
-  let minutes = time.getMinutes();
-  let seconds = time.getSeconds();
-  let day = time.getDay();
-  let month = time.getMonth();
-  let year = time.getFullYear();
-  let date = time.getDate();
-  let dayNames = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miercoles",
-    "Jueves",
-    "Viernes",
-    "Sabado",
-  ];
-  let monthNames = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-  let dayName = dayNames[day];
-  let monthName = monthNames[month];
-  let hour = hours;
-  let min = minutes;
-  let sec = seconds;
-  if (hours < 10) {
-    hour = "0" + hours;
-  }
-  if (minutes < 10) {
-    min = "0" + minutes;
-  }
-  if (seconds < 10) {
-    sec = "0" + seconds;
-  }
   return (
-    <div>
-      <Alert variant="success">
-        <Alert.Heading>
-          <center>
-            <b>RUTINA DEL DIA</b>
-          </center>
-        </Alert.Heading>
-        <center>
-          <p>
-            {dayName}, {date} de {monthName} de {year}
-          </p>
-        </center>
-        <div onClick={()=> logout()}>Salir</div>
-      </Alert>
-      <ListGroupMedicine />
-    </div>
+    <ThemeProvider theme={theme}>
+        <Box sx={{ flexGrow: 1}} style={{marginBottom: '1rem'}}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <House />
+              </IconButton>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Rutina para hoy
+              </Typography>
+              <Button color="inherit" onClick={logout}>Salir</Button>
+            </Toolbar>
+          </AppBar>
+        </Box>
+        <Container component="main" maxWidth="xs">
+          <ListGroupMedicine />
+        </Container>
+    </ThemeProvider>
   );
 };
 
