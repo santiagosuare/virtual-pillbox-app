@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -16,13 +17,26 @@ const theme = createTheme();
 
 export default function Register() {
     const navigate = useNavigate();
-    const handleSubmit = (event) => {
+    const [ isLoading, setIsLoading ] = React.useState(false);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        });
+        const jsonData = JSON.stringify(Object.fromEntries(data));
+        try {
+            const response = await fetch('http://localhost:8080/api/user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: jsonData,
+            });
+            setIsLoading(false);
+            const result = await response.json();
+            console.log(result);
+            navigate('/login');
+        } catch (error) {
+            console.log(error.message, 'error');
+        }
     };
 
     return (
@@ -48,10 +62,10 @@ export default function Register() {
                         <Grid item xs={12} sm={6}>
                             <TextField
                             autoComplete="id"
-                            name="dni"
+                            name="DNI"
                             required
                             fullWidth
-                            id="dni"
+                            id="DNI"
                             label="DNI"
                             autoFocus
                             />
@@ -59,21 +73,20 @@ export default function Register() {
                         <Grid item xs={12} sm={6}>
                             <TextField
                             autoComplete="given-name"
-                            name="nombre"
+                            name="Nombre"
                             required
                             fullWidth
-                            id="nombre"
+                            id="Nombre"
                             label="Nombre"
-                            autoFocus
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                             required
                             fullWidth
-                            id="apellido"
+                            id="Apellido"
                             label="Apellido"
-                            name="apellido"
+                            name="Apellido"
                             autoComplete="family-name"
                             />
                         </Grid>
@@ -81,9 +94,9 @@ export default function Register() {
                             <TextField
                             required
                             fullWidth
-                            id="email"
+                            id="Usuario"
                             label="Correo electrónico"
-                            name="email"
+                            name="Usuario"
                             autoComplete="email"
                             />
                         </Grid>
@@ -91,10 +104,10 @@ export default function Register() {
                             <TextField
                             required
                             fullWidth
-                            name="password"
+                            name="Password"
                             label="Contraseña"
-                            type="password"
-                            id="password"
+                            type="Password"
+                            id="Password"
                             autoComplete="new-password"
                             />
                         </Grid>
@@ -102,9 +115,9 @@ export default function Register() {
                             <TextField
                                 required
                                 fullWidth
-                                name="address"
+                                name="Direccion"
                                 label="Dirección"
-                                id="address"
+                                id="Direccion"
                                 autoComplete="new-address"
                             />
                         </Grid>
@@ -115,9 +128,9 @@ export default function Register() {
                                 type="date"
                                 InputLabelProps={{shrink: true}}
                                 defaultValue="0000-00-00"
-                                name="birthdate"
+                                name="Fecha_Nacimiento"
                                 label="Fecha nacimiento"
-                                id="birthdate"
+                                id="Fecha_Nacimiento"
                                 autoComplete="new-birthdate"
                             />
                         </Grid>
@@ -128,7 +141,11 @@ export default function Register() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         >
-                        Crear cuenta
+                        {
+                            isLoading
+                            ? <CircularProgress color="inherit" size={20}/>
+                            : 'Crear cuenta'
+                        }
                     </Button>
                     <Grid container justifyContent="flex-end">
                     <Grid item>
