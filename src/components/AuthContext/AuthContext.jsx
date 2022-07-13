@@ -1,40 +1,17 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import JwtDecode from "jwt-decode";
 
-const AuthContext = React.createContext(null);
-
-const fakeAuthProvider = {
-    isAuthenticated: false,
-    signin(callback) {
-        fakeAuthProvider.isAuthenticated = true;
-        setTimeout(callback, 100); // fake async
-    },
-    signout(callback) {
-        fakeAuthProvider.isAuthenticated = false;
-        setTimeout(callback, 100);
-    },
-};
+export const AuthContext = React.createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = React.useState(null);
 
-    const signin = (newUser, callback) => {
-        return fakeAuthProvider.signin(() => {
-            setUser(newUser);
-            callback();
-        });
-    };
+    const token = localStorage.getItem('token');
 
-    const signout = (callback) => {
-        return fakeAuthProvider.signout(() => {
-            setUser(null);
-            callback();
-        });
-    };
+    const value = token ? { user: JwtDecode(token)  } : {};
 
-    const value = { user, signin, signout };
-
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{user, setUser}}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

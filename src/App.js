@@ -14,12 +14,12 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
           <Route path="/export"  element={<RequireAuth><Export /></RequireAuth>} />
           <Route path ="/calendario" element={<RequireAuth><Calendar /></RequireAuth>}/>
           <Route path="/medicina" element={<RequireAuth><Medicine /></RequireAuth>} />
           <Route path="/usario" element={<RequireAuth><User /></RequireAuth>} />
-          <Route path="/home" exact element={<RequireAuth><Home /></RequireAuth>} />
+          <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
+          <Route path="/login" exact element={<Login />} />
         </Routes>
         <NavBar />
       </Router>

@@ -13,22 +13,27 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import JwtDecode from 'jwt-decode';
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
+    const { setUser } = useAuth();
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const jsonData = JSON.stringify(Object.fromEntries(data));
         try {
-            const response = await fetch('http://localhost:3001/api/login', {
+            const response = await fetch('http://localhost:8080/api/login', {
                 method: 'POST',
-                body: data,
+                headers: { 'Content-Type': 'application/json' },
+                body: jsonData,
             });
             const result = await response.json();
             const { token } = result;
-            localStorage.setItem('token', token);
+            setUser( JwtDecode(token) );
             navigate('/home');
         } catch (error) {
             console.log(error.message, 'error');
