@@ -8,15 +8,13 @@ import {
     Button,
     CssBaseline,
     TextField,
-    FormControlLabel,
-    Checkbox,
     Link,
     Grid,
     Box,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../components/AuthContext';
 
 const theme = createTheme();
 

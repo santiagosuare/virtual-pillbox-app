@@ -1,7 +1,7 @@
 import React from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ListGroupMedicine from "../Medicine/ListGroupMedicine";
-import { useAuth } from "../AuthContext";
+import ListGroupMedicine from "../../components/MedicineList/MedicineList";
+import { useAuth } from "../../components/AuthContext";
 import {
   Typography,
   Container,

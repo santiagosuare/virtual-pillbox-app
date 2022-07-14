@@ -3,7 +3,7 @@ import { ListGroup, Container } from "react-bootstrap";
 import MedicineCard from "../MedicineCard";
 import { CircularProgress } from "@mui/material";
 
-const ListGroupMedicine = () => {
+const MedicineList = () => {
   const [ isLoading, setIsLoading ] = React.useState(true);
   const [ medicines, setMedicines ] = React.useState([]);
   useEffect(() => {
@@ -34,4 +34,4 @@ const ListGroupMedicine = () => {
   );
 };
 
-export default ListGroupMedicine;
+export default MedicineList;
