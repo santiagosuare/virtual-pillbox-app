@@ -63,54 +63,54 @@ export default function EditMedicine({ medicine }) {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                            autoComplete="id"
-                            name="DNI"
-                            required
-                            fullWidth
-                            id="DNI"
-                            label="DNI"
-                            autoFocus
+                                autoComplete="id"
+                                name="DNI"
+                                required
+                                fullWidth
+                                id="DNI"
+                                label="DNI"
+                                autoFocus
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                            autoComplete="given-name"
-                            name="Nombre"
-                            required
-                            fullWidth
-                            id="Nombre"
-                            label="Nombre"
+                                autoComplete="given-name"
+                                name="Nombre"
+                                required
+                                fullWidth
+                                id="Nombre"
+                                label="Nombre"
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                            required
-                            fullWidth
-                            id="Apellido"
-                            label="Apellido"
-                            name="Apellido"
-                            autoComplete="family-name"
+                                required
+                                fullWidth
+                                id="Apellido"
+                                label="Apellido"
+                                name="Apellido"
+                                autoComplete="family-name"
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                            required
-                            fullWidth
-                            id="Usuario"
-                            label="Correo electrónico"
-                            name="Usuario"
-                            autoComplete="email"
+                                required
+                                fullWidth
+                                id="Usuario"
+                                label="Correo electrónico"
+                                name="Usuario"
+                                autoComplete="email"
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                            required
-                            fullWidth
-                            name="Password"
-                            label="Contraseña"
-                            type="Password"
-                            id="Password"
-                            autoComplete="new-password"
+                                required
+                                fullWidth
+                                name="Password"
+                                label="Contraseña"
+                                type="Password"
+                                id="Password"
+                                autoComplete="new-password"
                             />
                         </Grid>
                         <Grid item xs={12}>

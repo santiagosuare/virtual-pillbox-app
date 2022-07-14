@@ -30,7 +30,7 @@ const MedicineList = () => {
   );
 };
 
-  useEffect(() => fetchMedicines(), []);
+  useEffect(() => { fetchMedicines() }, []);
 
   return (
       <ListGroup>

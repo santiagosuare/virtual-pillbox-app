@@ -6,37 +6,66 @@ import {
     CardContent,
     CardActions,
     Avatar,
-    IconButton,
     Typography,
     Button,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {
+    Medication,
+    Check,
+    Edit,
+    MedicationLiquid,
+    Vaccines
+} from '@mui/icons-material';
 import { red } from '@mui/material/colors';
-import { Medication, Check, Edit } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
-export default function MedicineCard({medicine}) {
+export default function MedicineCard({medicine, laboratorio, rutina}) {
+    const navigate = useNavigate();
     console.log( medicine );
+    const {
+        id_medicamento: id,
+        nombre,
+        comentario,
+        dosis,
+        imagen,
+        monodroga,
+        presentacion,
+        unidad_medida: unidadMedida,
+    } = medicine;
     return (
         <Card sx={{ maxWidth: 345 }} style={{backgroundColor: '#EEE', marginBottom: '1rem'}}>
             <CardHeader
                 avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    <Medication/>
+                    {
+                        (() => {
+                            if( ['inyectable'].includes(presentacion) ) {
+                                return <Vaccines />;
+                            }
+                            if( ['jarabe', 'gota'].includes(presentacion) ) {
+                                return <MedicationLiquid />;
+                            }
+                            return <Medication />;
+                        })()
+                    }
                 </Avatar>
                 }
-                title="IBU400"
-                subheader="Ibuprofeno 400mg"
+                title={nombre}
+                subheader={`${monodroga} ${dosis}${unidadMedida}`}
             />
-            <CardMedia
-                component="img"
-                height="194"
-                image="/images/pills.jpeg"
-                alt="Paella dish"
-            />
+            {
+                imagen &&
+                <CardMedia
+                    component="img"
+                    height="100"
+                    image={imagen}
+                    alt={nombre}
+                />
+            }
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    1 comprimido en 1 hora (12:00)<br/>
-                    Laboratorio Bayer
+                    {comentario}
+                    {laboratorio}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -51,6 +80,7 @@ export default function MedicineCard({medicine}) {
                 <Button
                     aria-label="editar"
                     variant="outlined"
+                    onClick={() => navigate(`/medicina/${id}`)}
                 >
                     <Edit /> Editar 
                 </Button>

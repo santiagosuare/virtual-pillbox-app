@@ -1,13 +1,14 @@
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./screens/HomeScreen";
-import User from "./screens/UserScreen";
-import Medicine from "./screens/MedicineScreen";
-import Calendar from "./screens/CalendarScreen";
-import Export from "./screens/ExportScreen";
-import Login from "./screens/LoginScreen";
-import Register from "./screens/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
+import UserScreen from "./screens/UserScreen";
+import MedicineScreen from "./screens/MedicineScreen";
+import EditMedicineScreen from "./screens/EditMedicineScreen";
+import CalendarScreen from "./screens/CalendarScreen";
+import ExportScreen from "./screens/ExportScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 import { AuthProvider, HideIfLoggedOut, RequireAuth, RequireNotAuth } from "./components/AuthContext";
 
 function App() {
@@ -16,15 +17,16 @@ function App() {
         <Router>
           <Routes>
             
-            <Route path="/login" element={<RequireNotAuth><Login /></RequireNotAuth>} />
-            <Route path="/register" element={<RequireNotAuth><Register /></RequireNotAuth>} />
+            <Route path="/login" element={<RequireNotAuth><LoginScreen /></RequireNotAuth>} />
+            <Route path="/register" element={<RequireNotAuth><RegisterScreen /></RequireNotAuth>} />
 
-            <Route path="/export"  element={<RequireAuth><Export /></RequireAuth>} />
-            <Route path ="/calendario" element={<RequireAuth><Calendar /></RequireAuth>}/>
-            <Route path="/medicina" element={<RequireAuth><Medicine /></RequireAuth>} />
-            <Route path="/usario" element={<RequireAuth><User /></RequireAuth>} />
-            <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
-            <Route path="/*" element={<RequireAuth><Home /></RequireAuth>} />
+            <Route path="/export"  element={<RequireAuth><ExportScreen /></RequireAuth>} />
+            <Route path ="/calendario" element={<RequireAuth><CalendarScreen /></RequireAuth>}/>
+            <Route path="/medicina" element={<RequireAuth><MedicineScreen /></RequireAuth>} />
+            <Route path="/medicina/*" element={<RequireAuth><EditMedicineScreen /></RequireAuth>} />
+            <Route path="/usario" element={<RequireAuth><UserScreen /></RequireAuth>} />
+            <Route path="/home" element={<RequireAuth><HomeScreen /></RequireAuth>} />
+            <Route path="/*" element={<RequireAuth><HomeScreen /></RequireAuth>} />
 
           </Routes>
           <HideIfLoggedOut><NavBar /></HideIfLoggedOut>
