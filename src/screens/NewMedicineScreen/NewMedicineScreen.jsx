@@ -29,29 +29,19 @@ export default function EditMedicine() {
     const [medicine, setMedicine] = React.useState({});
     const [laboratorios, setLaboratorios] = React.useState([]);
     const [laboratorio, setLaboratorio] = React.useState({label: "", id:""});
-
     useEffect(() => {
         fetch(
-            `http://localhost:5001/medicines/${medicineId}`,
-            { headers: { Authorization: user.subject.DNI } }
+            `http://localhost:8090/api/laboratorios`,
+            { headers: { Authorization: `token` } }
         )
         .then(response => response.json())
-        .then(medicine => {
+        .then(laboratorios => {
             setIsLoading(false);
-            setMedicine(medicine);
-            fetch(
-                `http://localhost:8090/api/laboratorios`,
-                { headers: { Authorization: `token` } }
-            )
-            .then(response => response.json())
-            .then(laboratorios => {
-                setLaboratorios(laboratorios);
-                const laboratorio = laboratorios.find(lab => lab.id === medicine.id_laboratorio);
-                setLaboratorio({label: laboratorio.nombre, id: laboratorio.id});
-            });
+            setLaboratorios(laboratorios);
+            const laboratorio = laboratorios.find(lab => lab.id === medicine.id_laboratorio);
+            setLaboratorio({label: laboratorio.nombre, id: laboratorio.id});
         });
     }, []);
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
@@ -61,13 +51,12 @@ export default function EditMedicine() {
             fetch(
                 `http://localhost:5001/medicines`,
                 {
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: user.subject.DNI,
                     },
                     body: JSON.stringify({
-                        "id_medicamento": medicine.id_medicamento,
                         "nombre": medicine.nombre,
                         "monodroga": medicine.monodroga,
                         "dosis": medicine.dosis,
@@ -85,24 +74,6 @@ export default function EditMedicine() {
             console.log(error.message, "error");
         }
     };
-
-    const deleteMedicine = () => {
-        try {
-            fetch(
-                `http://localhost:5001/medicines/${medicineId}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        Authorization: user.subject.DNI,
-                    },
-                }
-            )
-            .then(response => response.json())
-            .then(() => navigate(`/home`));
-        } catch (error) {
-            console.log(error.message, "error");
-        }
-    }
 
     if(isLoading) {
         return <CircularProgress />;
@@ -297,15 +268,6 @@ export default function EditMedicine() {
                         ) : (
                             "Guardar"
                         )}
-                        </Button>
-                        <Button
-                            fullWidth
-                            variant="outlined"
-                            color="error"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={deleteMedicine}
-                        >
-                            Borrar
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>

@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { ListGroup, Container } from "react-bootstrap";
 import MedicineCard from "../MedicineCard";
-import { CircularProgress } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { CircularProgress, Card, CardContent, Typography, CardActions, Button } from "@mui/material";
+import { useAuth } from "../../components/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const MedicineList = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [ isLoading, setIsLoading ] = React.useState(true);
   const [ medicines, setMedicines ] = React.useState([]);
 
@@ -15,7 +20,7 @@ const MedicineList = () => {
         headers:
         {
           'Content-Type': 'application/json',
-          'Authorization': 1,
+          'Authorization': user.subject.DNI,
         },
       }
     ).then(
@@ -40,6 +45,15 @@ const MedicineList = () => {
             ? <CircularProgress />
             : medicines.map( (medicine, index) => <MedicineCard medicine={medicine} key={index}/> )
           }
+          <Button
+              aria-label="nuevo"
+              variant="contained"
+              color="success"
+              fullWidth
+              onClick={() => navigate(`/medicina/new`)}
+          >
+              <Add /> Agregar nuevo Medicamento 
+          </Button>
         </Container>
       </ListGroup>
   );

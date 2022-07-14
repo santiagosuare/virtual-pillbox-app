@@ -39,10 +39,10 @@ export default function MedicineCard({medicine, laboratorio, rutina}) {
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                     {
                         (() => {
-                            if( ['inyectable'].includes(presentacion) ) {
+                            if( ['Inyectable'].includes(presentacion) ) {
                                 return <Vaccines />;
                             }
-                            if( ['jarabe', 'gota'].includes(presentacion) ) {
+                            if( ['Jarabe', 'Gota'].includes(presentacion) ) {
                                 return <MedicationLiquid />;
                             }
                             return <Medication />;
@@ -54,11 +54,10 @@ export default function MedicineCard({medicine, laboratorio, rutina}) {
                 subheader={`${monodroga} ${dosis}${unidadMedida}`}
             />
             {
-                imagen &&
                 <CardMedia
                     component="img"
-                    height="100"
-                    image={imagen}
+                    height="200"
+                    image="/images/pills.jpeg"
                     alt={nombre}
                 />
             }
@@ -69,14 +68,6 @@ export default function MedicineCard({medicine, laboratorio, rutina}) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button
-                    aria-label="marcar como consumido"
-                    variant="contained"
-                    color="success"
-                    style={{marginRight: '1rem'}}
-                >
-                    <Check /> Ya la tomé 
-                </Button>
                 <Button
                     aria-label="editar"
                     variant="outlined"

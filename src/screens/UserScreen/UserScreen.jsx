@@ -1,8 +1,21 @@
 import React from "react";
 import Alert from "react-bootstrap/Alert";
 import { Card } from "react-bootstrap";
+import { useAuth } from "../../components/AuthContext";
 
 const User = () => {
+  const { user } = useAuth();
+  console.log( user );
+  console.log( user.subject );
+  const {
+    Nombre: nombre,
+    Apellido: apellido,
+    DNI,
+    Usuario: email,
+    Direccion: direccion,
+    Fecha_Nacimiento: fechaNacimiento } = user.subject;
+  
+  const fecha = new Date(fechaNacimiento);
   return (
     <div>
       <Alert variant="success">
@@ -22,11 +35,11 @@ const User = () => {
           <Card.Title>Informacion Personal</Card.Title>
           <Card.Text>
             <p>
-              <b>Nombre y Apellido:</b> Francisco Olivera
-              <br />
-              <b>Fecha de Nacimiento:</b> 22/05/1998
-              <br />
-              <b>DNI: </b> 23456789
+              <b>Nombre y Apellido:</b> {nombre} {apellido} <br />
+              <b>Fecha de Nacimiento:</b> {fecha.toLocaleDateString('es-AR')} <br />
+              <b>DNI: </b> {DNI} <br />
+              <b>Correo Electronico: </b> {email} <br />
+              <b>Dirección: </b> {direccion}
             </p>
           </Card.Text>
           <Card.Title>Informacion Prepaga</Card.Title>

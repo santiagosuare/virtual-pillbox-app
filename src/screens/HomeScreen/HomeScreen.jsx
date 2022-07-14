@@ -32,7 +32,7 @@ const Home = () => {
                 <House />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Rutina para hoy
+                Mis Medicamentos
               </Typography>
               <Button color="inherit" onClick={logout}>Salir</Button>
             </Toolbar>
