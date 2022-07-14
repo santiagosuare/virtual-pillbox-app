@@ -74,9 +74,9 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Correo electrónico"
-                            name="email"
+                            id="identification"
+                            label="DNI o Correo electrónico"
+                            name="identification"
                             autoComplete="email"
                             autoFocus
                         />
