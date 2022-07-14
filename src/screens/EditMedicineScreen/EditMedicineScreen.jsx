@@ -15,26 +15,27 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '../../components/AuthContext';
 
 const theme = createTheme();
 
-export default function EditMedicine({ medicine }) {
+export default function EditMedicine() {
+    const { id_medicamento: medicineId } = useParams();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [ isLoading, setIsLoading ] = React.useState(false);
-
+    (async function() {
+        const response = await fetch(`http://localhost:5001/medicines/${medicineId}`,{headers: {'Authorization': user.subject.DNI}});
+        const res = await response.json();
+        console.log(res);
+    })()
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         const data = new FormData(event.currentTarget);
-        const jsonData = JSON.stringify(Object.fromEntries(data));
         try {
-            const response = await fetch('http://localhost:8080/api/user', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: jsonData,
-            });
             setIsLoading(false);
-            await response.json();
             navigate('/login');
         } catch (error) {
             console.log(error.message, 'error');
@@ -129,7 +130,6 @@ export default function EditMedicine({ medicine }) {
                                 fullWidth
                                 type="date"
                                 InputLabelProps={{shrink: true}}
-                                defaultValue="0000-00-00"
                                 name="Fecha_Nacimiento"
                                 label="Fecha nacimiento"
                                 id="Fecha_Nacimiento"

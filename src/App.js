@@ -23,7 +23,7 @@ function App() {
             <Route path="/export"  element={<RequireAuth><ExportScreen /></RequireAuth>} />
             <Route path ="/calendario" element={<RequireAuth><CalendarScreen /></RequireAuth>}/>
             <Route path="/medicina" element={<RequireAuth><MedicineScreen /></RequireAuth>} />
-            <Route path="/medicina/*" element={<RequireAuth><EditMedicineScreen /></RequireAuth>} />
+            <Route path="/medicina/:id_medicamento" element={<RequireAuth><EditMedicineScreen /></RequireAuth>} />
             <Route path="/usario" element={<RequireAuth><UserScreen /></RequireAuth>} />
             <Route path="/home" element={<RequireAuth><HomeScreen /></RequireAuth>} />
             <Route path="/*" element={<RequireAuth><HomeScreen /></RequireAuth>} />
