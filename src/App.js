@@ -1,28 +1,37 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import User from "./components/User";
-import Medicine from "./components/Medicine";
-import Calendar from "./components/Calendar";
-import Export from "./components/Export";
+import HomeScreen from "./screens/HomeScreen";
+import UserScreen from "./screens/UserScreen";
+import MedicineScreen from "./screens/MedicineScreen";
+import EditMedicineScreen from "./screens/EditMedicineScreen";
+import CalendarScreen from "./screens/CalendarScreen";
+import ExportScreen from "./screens/ExportScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import { AuthProvider, HideIfLoggedOut, RequireAuth, RequireNotAuth } from "./components/AuthContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/Export" caseSensitive={false} element={<Export />} />
-        <Route
-          path="/Calendario"
-          caseSensitive={false}
-          element={<Calendar />}
-        />
-        <Route path="/Medicina" caseSensitive={false} element={<Medicine />} />
-        <Route path="/User" caseSensitive={false} element={<User />} />
-        <Route path="/" caseSensitive={false} element={<Home />} />
-      </Routes>
-      <NavBar />
-    </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            
+            <Route path="/login" element={<RequireNotAuth><LoginScreen /></RequireNotAuth>} />
+            <Route path="/register" element={<RequireNotAuth><RegisterScreen /></RequireNotAuth>} />
+
+            <Route path="/export"  element={<RequireAuth><ExportScreen /></RequireAuth>} />
+            <Route path ="/calendario" element={<RequireAuth><CalendarScreen /></RequireAuth>}/>
+            <Route path="/medicina" element={<RequireAuth><MedicineScreen /></RequireAuth>} />
+            <Route path="/medicina/:id_medicamento" element={<RequireAuth><EditMedicineScreen /></RequireAuth>} />
+            <Route path="/usario" element={<RequireAuth><UserScreen /></RequireAuth>} />
+            <Route path="/home" element={<RequireAuth><HomeScreen /></RequireAuth>} />
+            <Route path="/*" element={<RequireAuth><HomeScreen /></RequireAuth>} />
+
+          </Routes>
+          <HideIfLoggedOut><NavBar /></HideIfLoggedOut>
+        </Router>
+      </AuthProvider>
   );
 }
 
