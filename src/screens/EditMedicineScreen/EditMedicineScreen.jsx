@@ -34,8 +34,7 @@ export default function EditMedicine({ medicine }) {
                 body: jsonData,
             });
             setIsLoading(false);
-            const result = await response.json();
-            console.log(result);
+            await response.json();
             navigate('/login');
         } catch (error) {
             console.log(error.message, 'error');

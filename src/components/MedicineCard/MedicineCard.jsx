@@ -1,34 +1,21 @@
 import * as React from 'react';
+import {
+    Card,
+    CardHeader,
+    CardMedia,
+    CardContent,
+    CardActions,
+    Avatar,
+    IconButton,
+    Typography,
+    Button,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { red } from '@mui/material/colors';
-import ShareIcon from '@mui/icons-material/Share';
-import Check from '@mui/icons-material/Check';
-import Edit from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Medication } from '@mui/icons-material';
+import { Medication, Check, Edit } from '@mui/icons-material';
 
-const ExpandMore = styled(
-    (props) => {
-        const { expand, ...other } = props;
-        return <IconButton {...other} />;
-    })(({ theme, expand }) => ({
-        transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    }));
-
-export default function MedicineCard() {
+export default function MedicineCard({medicine}) {
+    console.log( medicine );
     return (
         <Card sx={{ maxWidth: 345 }} style={{backgroundColor: '#EEE', marginBottom: '1rem'}}>
             <CardHeader
