@@ -1,5 +1,4 @@
 import "./App.css";
-import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider, HideIfLoggedOut, RequireAuth, RequireNotAuth } from "./components/AuthContext";
 import HomeScreen from "./screens/HomeScreen";
@@ -26,7 +25,7 @@ function App() {
             <Route path="/medicina" element={<RequireAuth><MedicineScreen /></RequireAuth>} />
             <Route path="/medicina/:id_medicamento" element={<RequireAuth><EditMedicineScreen /></RequireAuth>} />
             <Route path="/medicina/new" element={<RequireAuth><NewMedicineScreen /></RequireAuth>} />
-            <Route path="/usario" element={<RequireAuth><UserScreen /></RequireAuth>} />
+            <Route path="/usuario" element={<RequireAuth>=<UserScreen /></RequireAuth>} />
             <Route path="/home" element={<RequireAuth><HomeScreen /></RequireAuth>} />
             <Route path="/*" element={<RequireAuth><HomeScreen /></RequireAuth>} />
 

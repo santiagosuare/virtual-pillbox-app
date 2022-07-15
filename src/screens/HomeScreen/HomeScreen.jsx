@@ -11,12 +11,14 @@ import {
   Toolbar,
   IconButton,
 } from '@mui/material';
-import House from '@mui/icons-material/House';
+import Person from '@mui/icons-material/Person';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 const Home = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1}} style={{marginBottom: '1rem'}}>
@@ -29,7 +31,7 @@ const Home = () => {
                 aria-label="menu"
                 sx={{ mr: 2 }}
               >
-                <House />
+                <Person onClick={() => navigate('/usuario')}/>
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Mis Medicamentos

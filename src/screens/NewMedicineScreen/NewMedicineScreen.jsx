@@ -22,7 +22,6 @@ import { useEffect } from "react";
 const theme = createTheme();
 
 export default function EditMedicine() {
-    const { id_medicamento: medicineId } = useParams();
     const { user } = useAuth();
     const navigate = useNavigate();
     const [ isLoading, setIsLoading ] = React.useState(true);
@@ -212,34 +211,34 @@ export default function EditMedicine() {
                             <Grid item xs={12}>
                                 {
                                     laboratorios.length > 0 &&
-                                <Autocomplete
-                                    disablePortal
-                                    id="lab-combo-box"
-                                    fullWidth
-                                    options={laboratorios.map(lab => ({label:lab.nombre, id:lab.id}))}
-                                    onChange={(event, value) => {
-                                        const lab = laboratorios.find(lab => lab.nombre === value.label);
-                                        setMedicine({ ...medicine, id_laboratorio: lab.id });
-                                        setLaboratorio({label: lab.nombre, id: lab.id});
-                                    }}
-                                    value={laboratorio}
-                                    inputValue={laboratorio.label}
-                                    onInputChange={(value) => setMedicine({...medicine, id_laboratorio: value.id}) && setLaboratorio({label: value, id: value.id})}
-                                    isOptionEqualToValue={(option, value) => option.id === value.id }
-                                    renderInput={(params) => {
-                                        return (
-                                        <TextField
-                                            {...params}
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="Laboratorio"
-                                            label="Laboratorio"
-                                            type="text"
-                                            id="Laboratorio"
-                                        />);
-                                    }}
-                                />
+                                    <Autocomplete
+                                        disablePortal
+                                        id="lab-combo-box"
+                                        fullWidth
+                                        options={laboratorios.map(lab => ({label:lab.nombre, id:lab.id}))}
+                                        onChange={(event, value) => {
+                                            const lab = laboratorios.find(lab => lab.nombre === value.label);
+                                            setMedicine({ ...medicine, id_laboratorio: lab.id });
+                                            setLaboratorio({label: lab.nombre, id: lab.id});
+                                        }}
+                                        value={laboratorio}
+                                        inputValue={laboratorio.label}
+                                        onInputChange={(value) => setMedicine({...medicine, id_laboratorio: value.id}) && setLaboratorio({label: value, id: value.id})}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id }
+                                        renderInput={(params) => {
+                                            return (
+                                            <TextField
+                                                {...params}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                name="Laboratorio"
+                                                label="Laboratorio"
+                                                type="text"
+                                                id="Laboratorio"
+                                            />);
+                                        }}
+                                    />
                                 }
                             </Grid>
                             <Grid item xs={12}>

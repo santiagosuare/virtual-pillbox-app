@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +10,7 @@ import { CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Autocomplete from '@mui/material/Autocomplete';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,27 +18,54 @@ const theme = createTheme();
 
 export default function Register() {
     const navigate = useNavigate();
+    const [obrasSociales, setObrasSociales] = React.useState([]);
+    const [obraSocial, setObraSocial] = React.useState({label: "", id:""});
     const [ isLoading, setIsLoading ] = React.useState(false);
+
+    useEffect(() => {
+        fetch(
+            `http://localhost:8010/api/os/0`,
+        )
+        .then(response => response.json())
+        .then(obrasSociales => {
+            setIsLoading(false);
+            setObrasSociales(obrasSociales.map(obraSocial => ({label: obraSocial.nombre, id: obraSocial.id})));
+        });
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
-        const data = new FormData(event.currentTarget);
-        const jsonData = JSON.stringify(Object.fromEntries(data));
+        const data = Object.fromEntries(new FormData(event.currentTarget));
+        const identityData = {...data};
+        delete identityData.obraSocial;
+        const insuranceData = {
+            nombre: obraSocial.label,
+            nroAfiliado: 83491190,
+            plan: "Plan 1",
+            dniUsuario: identityData.DNI, 
+        };
         try {
-            const response = await fetch('http://localhost:8080/api/user', {
+            await fetch('http://localhost:8080/api/user', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: jsonData,
+                body: JSON.stringify(identityData),
+            });
+            await fetch('http://localhost:8010/api/os', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(insuranceData),
             });
             setIsLoading(false);
-            await response.json();
             navigate('/login');
         } catch (error) {
             console.log(error.message, 'error');
         }
     };
-
+    console.log({
+        obraSocial,
+        obrasSociales,
+    });
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -133,6 +161,38 @@ export default function Register() {
                                 autoComplete="new-birthdate"
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                        {
+                            obrasSociales.length > 0 &&
+                            <Autocomplete
+                                disablePortal
+                                id="os-combo-box"
+                                fullWidth
+                                options={obrasSociales}
+                                onChange={(event, value) => {
+                                    const os = obrasSociales.find(os => os.label === value.label);
+                                    setObraSocial({label: os.label, id: os.id});
+                                }}
+                                value={obraSocial}
+                                inputValue={obraSocial.label}
+                                onInputChange={(event, value) => setObraSocial({label: value.label, id: value.id})}
+                                isOptionEqualToValue={(option, value) => option.id === value.id }
+                                renderInput={(params) => {
+                                    return (
+                                    <TextField
+                                        {...params}
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="obraSocial"
+                                        label="Obra Social"
+                                        type="text"
+                                        id="obraSocial"
+                                    />);
+                                }}
+                            />
+                        }
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -147,11 +207,11 @@ export default function Register() {
                         }
                     </Button>
                     <Grid container justifyContent="flex-end">
-                    <Grid item>
-                        <Link onClick={() => navigate('/login')} variant="body2">
-                            Ya tengo una cuenta
-                        </Link>
-                    </Grid>
+                        <Grid item>
+                            <Link onClick={() => navigate('/login')} variant="body2">
+                                Ya tengo una cuenta
+                            </Link>
+                        </Grid>
                     </Grid>
                 </Box>
                 </Box>

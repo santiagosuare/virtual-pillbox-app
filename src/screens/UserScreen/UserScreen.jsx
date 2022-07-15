@@ -1,12 +1,11 @@
-import React from "react";
+import React, {useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import { Card } from "react-bootstrap";
 import { useAuth } from "../../components/AuthContext";
 
 const User = () => {
   const { user } = useAuth();
-  console.log( user );
-  console.log( user.subject );
+  const [obraSocial, setObraSocial] = React.useState([]);
   const {
     Nombre: nombre,
     Apellido: apellido,
@@ -14,6 +13,15 @@ const User = () => {
     Usuario: email,
     Direccion: direccion,
     Fecha_Nacimiento: fechaNacimiento } = user.subject;
+
+    useEffect(() => {
+      fetch(
+          `http://localhost:8010/api/os/${DNI}`,
+      )
+      .then(response => response.json())
+      .then(obraSocial => setObraSocial(obraSocial[0]));
+      }
+    , []);
   
   const fecha = new Date(fechaNacimiento);
   return (
@@ -45,11 +53,11 @@ const User = () => {
           <Card.Title>Informacion Prepaga</Card.Title>
           <Card.Text>
             <p>
-              <b>Obra Social:</b> PAMI
+              <b>Obra Social:</b> {obraSocial?.nombre}
               <br />
-              <b>Nro de Afiliado: </b> 123456789
+              <b>Nro de Afiliado: </b> {obraSocial?.nroAfiliado}
               <br />
-              <b>Plan: </b> AB345/10
+              <b>Plan: </b> {obraSocial?.plan}
             </p>
           </Card.Text>
         </Card.Body>
